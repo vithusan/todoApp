@@ -25,8 +25,24 @@ function App() {
     }
   };
 
+  const saveLocalTodos = () => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  };
+  const getLocalTodos = () => {
+    if (localStorage.getItem("todos") === null) {
+      localStorage.setItem("todos", JSON.stringify([]));
+    } else {
+      setTodos(JSON.parse(localStorage.getItem("todos")));
+    }
+  };
+
+  useEffect(() => {
+    getLocalTodos();
+  }, []);
+
   useEffect(() => {
     filterHanler();
+    saveLocalTodos();
   }, [todos, status]);
 
   return (
